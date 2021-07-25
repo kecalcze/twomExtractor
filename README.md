@@ -11,3 +11,9 @@ To extract data from docx we used this process:
 - use this main.php script to convert them to `*.csv`
 - use @Conanien`s script to parse the csv -> json
 - import json to app and do handmade adjustments
+
+## Thanks to:
+
+Conanien for extractor/parser
+
+Pyromantic for help and ideas
