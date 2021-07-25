@@ -1,0 +1,13 @@
+# TWoM Extractor
+
+set of tools we use to extract data from provided source `.docx` files
+
+## Porocess:
+
+To extract data from docx we used this process:
+
+- via libre office copy whole table from Writer -> Sheet
+- save sheets as `*.ods` -> copy them to `files` folder
+- use this main.php script to convert them to `*.csv`
+- use @Conanien`s script to parse the csv -> json
+- import json to app and do handmade adjustments

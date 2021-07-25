@@ -1,0 +1,5 @@
+vendor
+*.csv
+*.7z
+files/*.ods
+files/*.zip

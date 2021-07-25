@@ -1,0 +1,14 @@
+{
+    "name": "bivoj/twom-extractor",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jakub Kubień",
+            "email": "jakub.kubien@lmc.eu"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.18"
+    }
+}
