@@ -16,7 +16,7 @@ foreach ($csv in $ContentOfFolder) { #Main foreach loop, that based on provided 
         #REGION regex for ID used for translating json
         $ID = ([regex]::matches($item, '^.\d{2,4}|^\d{2,4}')).Value
         if ($ID) {
-            $obj.ID = $ID
+            $obj.ID = $ID.Trim()
         }
         else {
             continue
@@ -95,12 +95,13 @@ foreach ($csv in $ContentOfFolder) { #Main foreach loop, that based on provided 
         }
         #ENDREGION
         #REGION matching VRAŤTE SE KE HŘE pattern
+        $options = [Text.RegularExpressions.RegexOptions]::IgnoreCase -bor [Text.RegularExpressions.RegexOptions]::CultureInvariant
         if ($ProcessingText) {
-            [array]$BTGPointer = ([regex]::matches($ProcessingText, 'VRAŤTE SE KE HŘE')).Value
+            [array]$BTGPointer = ([regex]::matches($ProcessingText, 'VRAŤTE SE(.*) KE HŘE', $options)).Value
             [array]$BTGPointer2 = $BTGPointer | ForEach-Object { "[to=BTG]" }
         }
         else {
-            [array]$BTGPointer = ([regex]::matches($item, 'VRAŤTE SE KE HŘE')).Value
+            [array]$BTGPointer = ([regex]::matches($item, 'VRAŤTE SE(.*) KE HŘE', $options)).Value
             [array]$BTGPointer2 = $BTGPointer | ForEach-Object { "[to=BTG]" }
         }
         if ($BTGPointer) {
@@ -137,7 +138,7 @@ foreach ($csv in $ContentOfFolder) { #Main foreach loop, that based on provided 
 
         $ProcessingText = $ProcessingText -replace '\\', '' #removing escape character used in regex matches
 
-        $obj.TEXT = $ProcessingText
+        $obj.TEXT = $ProcessingText.Trim()
 
         $jsonConstructor | Add-Member -MemberType NoteProperty -Name "$($obj.ID)" -Value "$($obj.TEXT)"
     }
