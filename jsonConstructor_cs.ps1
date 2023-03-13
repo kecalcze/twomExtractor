@@ -1,10 +1,11 @@
 param (
-    [Parameter(Mandatory=$true)][string]$CSVFolderPath,
-    [Parameter(Mandatory=$true)][string]$JSONoutputFolderPath
+    [Parameter(Mandatory = $false)][string]$CSVFolderPath = 'csv_files'
+    #[Parameter(Mandatory = $false)][string]$JSONoutputFolderPath = '.'
 )
 $jsonConstructor = New-Object -TypeName psobject #Creation for psobject without any properties, which is used as json constructor later.
 $ContentOfFolder = (Get-ChildItem -Path $CSVFolderPath | Where-Object { $_.Name -like '*.csv' }).FullName #Array of all CSV file names inside of provided folder path
-foreach ($csv in $ContentOfFolder) { #Main foreach loop, that based on provided csv data will prepare json
+foreach ($csv in $ContentOfFolder) {
+    #Main foreach loop, that based on provided csv data will prepare json
     $CurrentCSV = Import-Csv -Path $csv -Delimiter ',' -Header A, B, C | Select-Object -Unique B
     foreach ($item in $CurrentCSV.B) {
         $item = $item -replace '[[+*?()\\.]', '\$&' #Escape of all reserved characters by regex
@@ -144,5 +145,5 @@ foreach ($csv in $ContentOfFolder) { #Main foreach loop, that based on provided 
     }
     $outputJson = $jsonConstructor | ConvertTo-Json | ForEach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) }
     $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
-    [System.IO.File]::WriteAllLines("$JSONoutputFolderPath\rules.cs.json", $outputJson, $Utf8NoBomEncoding)
+    [System.IO.File]::WriteAllLines("rules.cs.json", $outputJson, $Utf8NoBomEncoding)
 }

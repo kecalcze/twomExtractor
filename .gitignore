@@ -3,3 +3,5 @@ vendor
 *.7z
 files/*.ods
 files/*.zip
+csv_files/*.csv
+*.json
