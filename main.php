@@ -13,5 +13,5 @@ foreach ($files as $file) {
 
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $writer->setUseBOM(true);
-    $writer->save(basename($file) . ".csv");
+    $writer->save('csv_files/' . basename($file) . ".csv");
 }
